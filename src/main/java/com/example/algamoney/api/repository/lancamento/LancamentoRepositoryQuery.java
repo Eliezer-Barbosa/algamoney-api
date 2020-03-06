@@ -13,8 +13,8 @@ import com.example.algamoney.api.repository.projection.ResumoLancamento;
 
 public interface LancamentoRepositoryQuery {
 	
-	public List<LancamentoEstatisticaCategoria> porCategoria(LocalDate mesReferencia);  
-
+	public List<LancamentoEstatisticaCategoria> porCategoria(LocalDate mesReferencia);
+	
 	public Page<Lancamento> filtrar(LancamentoFilter lancamentoFilter, Pageable pageable);
 	public Page<ResumoLancamento> resumir(LancamentoFilter lancamentoFilter, Pageable pageable);
 	
