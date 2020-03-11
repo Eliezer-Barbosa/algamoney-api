@@ -24,7 +24,7 @@ import com.example.algamoney.api.config.token.CustomTokenEnhancer;
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
-
+//
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	
