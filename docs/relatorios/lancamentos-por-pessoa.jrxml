@@ -80,7 +80,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="35" splitType="Stretch">
+		<band height="25" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<line>
 				<reportElement x="0" y="0" width="1" height="25" uuid="bf23f41f-d6fa-4553-8599-2132398e30f1">
@@ -129,7 +129,7 @@
 				<textFieldExpression><![CDATA[$F{pessoa}.getNome()]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤#,##0.00;¤-#,##0.00">
-				<reportElement x="480" y="1" width="74" height="20" uuid="ea5d487e-c963-4def-a5a0-d10e87087fe7"/>
+				<reportElement x="480" y="1" width="74" height="22" uuid="ea5d487e-c963-4def-a5a0-d10e87087fe7"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
