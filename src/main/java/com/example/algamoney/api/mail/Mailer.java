@@ -1,7 +1,6 @@
 package com.example.algamoney.api.mail;
 
 import java.util.Arrays;
-//import java.util.Arrays;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -22,8 +21,8 @@ public class Mailer {
 	
 	@EventListener
 	private void teste(ApplicationReadyEvent event) {
-		this.enviarEmail("email do remetente", 
-				Arrays.asList("email destinatario"), 
+		this.enviarEmail("", 
+				Arrays.asList(""), 
 				"Testando", "Olá!<br/>Teste ok.");
 		System.out.println("Terminado o envio de e-mail...");
 	}
