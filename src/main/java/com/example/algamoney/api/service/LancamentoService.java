@@ -50,7 +50,7 @@ public class LancamentoService {
 	@Autowired
 	private Mailer mailer;
 	
-	@Scheduled(fixedDelay = 1000 * 60 * 30)
+	//@Scheduled(fixedDelay = 1000 * 60 * 30)
 	public void avisarSobreLancamentosVencidos() {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Preparando envio de "
