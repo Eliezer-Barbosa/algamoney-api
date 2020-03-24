@@ -23,11 +23,13 @@ public class PessoaService {
 
 	  Pessoa pessoaSalva = buscarPessoaPeloCodigo(codigo);
 	  
-	  pessoa.getContatos().forEach(c -> c.setPessoa(pessoa));
+	  pessoaSalva.getContatos().clear();
+	  pessoaSalva.getContatos().addAll(pessoa.getContatos());
+	  pessoaSalva.getContatos().forEach(c -> c.setPessoa(pessoaSalva));
 	  
 	  // método orElseThrow é equivalente a: if (pessoaSalva == null) throw new EmptyResultDataAccessException(1);
 
-	  BeanUtils.copyProperties(pessoa, pessoaSalva, "codigo");
+	  BeanUtils.copyProperties(pessoa, pessoaSalva, "codigo", "contatos");
 
 	  return this.pessoaRepository.save(pessoaSalva);
 	}
