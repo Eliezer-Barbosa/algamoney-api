@@ -9,6 +9,11 @@ import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.BucketLifecycleConfiguration;
+import com.amazonaws.services.s3.model.CreateBucketRequest;
+import com.amazonaws.services.s3.model.Tag;
+import com.amazonaws.services.s3.model.lifecycle.LifecycleFilter;
+import com.amazonaws.services.s3.model.lifecycle.LifecycleTagPredicate;
 import com.example.algamoney.api.config.property.AlgamoneyApiProperty;
 
 @Configuration
@@ -19,12 +24,38 @@ public class S3Config {
 	
 	@Bean
 	public AmazonS3 amazonS3() {
+		
+		// getting credentials
 		AWSCredentials credenciais = new BasicAWSCredentials(
 				property.getS3().getAccessKeyId(), property.getS3().getSecretAccessKey());
 		
+		// S3 instance
 		AmazonS3 amazonS3 = AmazonS3ClientBuilder.standard()
 				.withCredentials(new AWSStaticCredentialsProvider(credenciais))
 				.build();
+		
+		// if bucket doesn't exist, create it
+		if (!amazonS3.doesBucketExistV2(property.getS3().getBucket())) {
+			amazonS3.createBucket(
+					new CreateBucketRequest(property.getS3().getBucket()));
+			
+			// regra de expiração 1 dia
+			BucketLifecycleConfiguration.Rule regraExpiracao =
+					new BucketLifecycleConfiguration.Rule()
+					.withId("Regra de expiração de arquivos temporarios")
+					.withFilter(new LifecycleFilter(
+							new LifecycleTagPredicate(new Tag("expirar", "true"))))
+					.withExpirationInDays(1)
+					.withStatus(BucketLifecycleConfiguration.ENABLED);
+			
+			// criando objeto de configuração
+			BucketLifecycleConfiguration configuration = new BucketLifecycleConfiguration()
+					.withRules(regraExpiracao);
+			
+			// associando a regra ao bucket
+			amazonS3.setBucketLifecycleConfiguration(property.getS3().getBucket(),
+					configuration);
+		}
 		
 		return amazonS3;
 	}
