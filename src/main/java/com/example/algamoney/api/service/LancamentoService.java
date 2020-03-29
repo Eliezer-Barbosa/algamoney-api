@@ -117,17 +117,21 @@ public class LancamentoService {
 	}
 
 	private void validarPessoa(Lancamento lancamento) {
-		Pessoa pessoa = pessoaRepository.findById(lancamento.getPessoa().getCodigo())
-				.orElseThrow(() -> new EmptyResultDataAccessException(1));
+		Pessoa pessoa = null;
+		if (lancamento.getPessoa().getCodigo() != null) {
+			pessoa = pessoaRepository.findOne(lancamento.getPessoa().getCodigo());
+		}
+
 		if (pessoa == null || pessoa.isInativo()) {
 			throw new PessoaInexistenteOuInativaException();
 		}
-		
 	}
-	
+
 	private Lancamento buscarLancamentoExistente(Long codigo) {
-		Lancamento lancamentoSalvo = lancamentoRepository.findById(codigo)
-				.orElseThrow(() -> new EmptyResultDataAccessException(1));
+		Lancamento lancamentoSalvo = lancamentoRepository.findOne(codigo);
+		if (lancamentoSalvo == null) {
+			throw new IllegalArgumentException();
+		}
 		return lancamentoSalvo;
 	}
 

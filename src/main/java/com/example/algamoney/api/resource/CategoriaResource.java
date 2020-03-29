@@ -57,10 +57,9 @@ public class CategoriaResource {
 	
 	@GetMapping("/{codigo}")
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_CATEGORIA') and #oauth2.hasScope('read')")
-	public ResponseEntity buscarPeloCodigo(@PathVariable Long codigo) {
-	    Optional categoria = this.categoriaRepository.findById(codigo);
-	    return categoria.isPresent() ? 
-	            ResponseEntity.ok(categoria.get()) : ResponseEntity.notFound().build();
+	public ResponseEntity<Categoria> buscarPeloCodigo(@PathVariable Long codigo) {
+	    Categoria categoria = this.categoriaRepository.findOne(codigo);
+	    return categoria != null ? ResponseEntity.ok(categoria) : ResponseEntity.notFound().build();
 	}
 
 }

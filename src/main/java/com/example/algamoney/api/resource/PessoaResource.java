@@ -50,17 +50,16 @@ public class PessoaResource {
 	
 	@GetMapping("/{codigo}")
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and #oauth2.hasScope('read')")
-	public ResponseEntity buscarPeloCodigo(@PathVariable Long codigo) {
-		Optional pessoa = this.pessoaRepository.findById(codigo);
-		 return pessoa.isPresent() ?
-				 ResponseEntity.ok(pessoa.get()) : ResponseEntity.notFound().build();
+	public ResponseEntity<Pessoa> buscarPeloCodigo(@PathVariable Long codigo) {
+		Pessoa pessoa = pessoaRepository.findOne(codigo);
+		return pessoa != null ? ResponseEntity.ok(pessoa) : ResponseEntity.notFound().build();
 	}
 	
 	@DeleteMapping("/{codigo}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@PreAuthorize("hasAuthority('ROLE_REMOVER_PESSOA') and #oauth2.hasScope('write')")
 	public void remover(@PathVariable Long codigo) {
-		this.pessoaRepository.deleteById(codigo);
+		pessoaRepository.delete(codigo);
 	}
 	
 	@PutMapping("/{codigo}")
