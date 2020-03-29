@@ -39,7 +39,7 @@ public class AlgamoneyApiProperty {
 		
 		private String secretAccessKey;
 		
-		private String bucket = "";
+		private String bucket = "emb-algamoney-arquivos";
 		
 		public String getBucket() {
 			return bucket;
