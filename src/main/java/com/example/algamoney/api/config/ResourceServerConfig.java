@@ -22,9 +22,9 @@ import org.springframework.security.oauth2.provider.expression.OAuth2MethodSecur
 @Configuration
 @EnableWebSecurity
 @EnableResourceServer
-@EnableGlobalMethodSecurity(prePostEnabled = true) // habilita segurança nos métodos dos resources
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
-	
+
 	@Autowired
 	private UserDetailsService userDetailsService;
 	
@@ -47,20 +47,15 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
 		resources.stateless(true);
 	}
-//	
+	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 	
 	@Bean
-	public MethodSecurityExpressionHandler createExpressHandler() {
+	public MethodSecurityExpressionHandler createExpressionHandler() {
 		return new OAuth2MethodSecurityExpressionHandler();
 	}
-	
-	/*
-	 * @Bean public PasswordEncoder passwordEncoder() { return new
-	 * BCryptPasswordEncoder(); }
-	 */
 	
 }

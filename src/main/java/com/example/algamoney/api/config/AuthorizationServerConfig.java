@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -24,31 +23,26 @@ import com.example.algamoney.api.config.token.CustomTokenEnhancer;
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
-//
+
 	@Autowired
 	private AuthenticationManager authenticationManager;
-	
-	/*
-	 * @Autowired private UserDetailsService userDetailsService;
-	 */
 	
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		clients.inMemory()
-			.withClient("angular")
-			.secret("@ngul@r0")
-			//.secret("$2a$10$R5ZOPvoXIsZokbDBPxua0ut9RMrjMaGLKERsXvE.MQw3cgvgiEIRW")
-			.scopes("read", "write")
-			.authorizedGrantTypes("password", "refresh_token")
-			.accessTokenValiditySeconds(1800) // 60 sec * 30
-			.refreshTokenValiditySeconds(3600 * 24) // 3600 segundos (1 hora) * 24 (1 dia)
-		.and()
-			.withClient("mobile")
-			.secret("mobile")
-			.scopes("read")
-			.authorizedGrantTypes("password", "refresh_token")
-			.accessTokenValiditySeconds(1800)
-			.refreshTokenValiditySeconds(3600 * 24);
+				.withClient("angular")
+				.secret("@ngul@r0")
+				.scopes("read", "write")
+				.authorizedGrantTypes("password", "refresh_token")
+				.accessTokenValiditySeconds(1800)
+				.refreshTokenValiditySeconds(3600 * 24)
+			.and()
+				.withClient("mobile")
+				.secret("m0b1l30")
+				.scopes("read")
+				.authorizedGrantTypes("password", "refresh_token")
+				.accessTokenValiditySeconds(1800)
+				.refreshTokenValiditySeconds(3600 * 24);
 	}
 	
 	@Override
@@ -59,9 +53,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		endpoints
 			.tokenStore(tokenStore())
 			.tokenEnhancer(tokenEnhancerChain)
-			//.accessTokenConverter(this.accessTokenConverter())
 			.reuseRefreshTokens(false)
-			//.userDetailsService(this.userDetailsService)
 			.authenticationManager(authenticationManager);
 	}
 	
@@ -79,7 +71,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	
 	@Bean
 	public TokenEnhancer tokenEnhancer() {
-		return new CustomTokenEnhancer();
+	    return new CustomTokenEnhancer();
 	}
 	
 }
