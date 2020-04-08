@@ -1,6 +1,7 @@
   
 package com.example.algamoney.api.mail;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -51,11 +52,13 @@ public class Mailer {
 		Map<String, Object> variaveis = new HashMap<>();
 		variaveis.put("lancamentos", vencidos);
 		
-		List<String> emails = destinatarios.stream()
-				.map(u -> u.getEmail())
-				.collect(Collectors.toList());
+//		List<String> emails = destinatarios.stream()
+//				.map(u -> u.getEmail())
+//				.collect(Collectors.toList());
+		List<String> emails = new ArrayList<String>();
+		emails.add("eliezer1789j@gmail.com");
 		
-		this.enviarEmail("email remetente", 
+		this.enviarEmail("$2a$10$iOc9iL9s0vOxI4Q.zOGkveUenppgL1i2FilQMlrADdErOmIku4ASi", 
 				emails, 
 				"Lançamentos vencidos", 
 				"mail/aviso-lancamentos-vencidos", 

@@ -79,7 +79,7 @@ public class AlgamoneyApiProperty {
 		}
 
 	}
-	
+
 	public static class Mail {
 		
 		private String host;
